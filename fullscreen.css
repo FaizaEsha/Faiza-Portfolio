@@ -1,0 +1,56 @@
+/* Full-screen play mode.
+   Title + character-select keep the original framed look.
+   Once the game starts (walking, sections, journal, results) the world fills the whole window.
+   Nothing in styles.css or game.js is changed. */
+
+body:not(:has(#title-screen.active, #character-screen.active)){
+  overflow:hidden;
+}
+
+/* the world fills the window */
+body:not(:has(#title-screen.active, #character-screen.active)) .site-frame{padding:0!important;max-width:none!important}
+body:not(:has(#title-screen.active, #character-screen.active)) .game-layout{padding:0!important}
+body:not(:has(#title-screen.active, #character-screen.active)) .world-frame{
+  position:fixed!important;
+  inset:0!important;
+  z-index:1;
+  width:100vw!important;
+  height:100vh!important;
+  height:100dvh!important;
+  max-height:none!important;
+  min-height:0!important;
+  aspect-ratio:auto!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  background:var(--night);
+}
+/* canvas keeps its proportions (no stretching):
+   on wide windows it fills the width and trims a little sky from the top, never the ground */
+body:not(:has(#title-screen.active, #character-screen.active)) #world{object-fit:contain;object-position:50% 100%}
+@media (min-aspect-ratio:16/9){
+  body:not(:has(#title-screen.active, #character-screen.active)) #world{object-fit:cover}
+}
+
+/* remove the page header, footer and controls strip */
+body:not(:has(#title-screen.active, #character-screen.active)) .brand,
+body:not(:has(#title-screen.active, #character-screen.active)) footer,
+body:not(:has(#title-screen.active, #character-screen.active)) .game-toolbar{display:none!important}
+
+/* keep the day/night switch available as a small floating button */
+body:not(:has(#title-screen.active, #character-screen.active)) .topbar{
+  position:fixed;
+  right:12px;
+  bottom:38px;
+  z-index:5;
+  height:auto;
+  border:0;
+  width:auto;
+}
+body:not(:has(#title-screen.active, #character-screen.active)) .theme-toggle{
+  height:30px;
+  min-width:0;
+  opacity:.9;
+  backdrop-filter:blur(5px);
+}
